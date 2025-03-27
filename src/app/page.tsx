@@ -141,7 +141,7 @@ export default function Home() {
   const stats = [
     { value: "97", label: "Satisfied Clients", suffix: "%" },
     { value: "250", label: "Projects Completed", suffix: "+" },
-    { value: "12", label: "Industry Experience", suffix: "yrs" },
+    { value: "10", label: "Industry Experience", suffix: "yrs" },
     { value: "24", label: "Awards Won", suffix: "" }
   ];
 
@@ -311,50 +311,7 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-      </motion.section>
-
-      {/* Clients/Partners Section */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <p className="text-blue-600 font-semibold mb-2">TRUSTED BY INDUSTRY LEADERS</p>
-            <h2 className="text-2xl font-bold text-gray-800">Our Partners & Clients</h2>
-          </div>
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
-            {/* Replace with actual client logos */}
-            <motion.div 
-              className="h-12 w-32 bg-white p-2 rounded-md shadow-sm flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity"
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="text-xl font-bold text-gray-400">Microsoft</div>
-            </motion.div>
-            <motion.div 
-              className="h-12 w-32 bg-white p-2 rounded-md shadow-sm flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity"
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="text-xl font-bold text-gray-400">Adobe</div>
-            </motion.div>
-            <motion.div 
-              className="h-12 w-32 bg-white p-2 rounded-md shadow-sm flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity"
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="text-xl font-bold text-gray-400">Google</div>
-            </motion.div>
-            <motion.div 
-              className="h-12 w-32 bg-white p-2 rounded-md shadow-sm flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity"
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="text-xl font-bold text-gray-400">Amazon</div>
-            </motion.div>
-            <motion.div 
-              className="h-12 w-32 bg-white p-2 rounded-md shadow-sm flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity"
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="text-xl font-bold text-gray-400">IBM</div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      </motion.section>  
 
       {/* Services Section */}
       <section className="py-20 bg-white">
