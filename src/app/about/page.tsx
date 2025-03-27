@@ -1,6 +1,5 @@
 "use client";
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -73,7 +72,7 @@ export default function AboutPage() {
                   Founded with a vision to bridge the gap between technology and business success, TechSolutions started as a small team of tech enthusiasts committed to helping local businesses establish their digital presence.
                 </p>
                 <p className="text-gray-700 mb-4 leading-relaxed">
-                  Over the years, we've grown into a full-service digital agency, expanding our expertise across web development, social media marketing, graphic design, and software solutions. Our growth has been fueled by our dedication to client success and our commitment to staying at the forefront of technological innovations.
+                  Over the years, we&apos;ve grown into a full-service digital agency, expanding our expertise across web development, social media marketing, graphic design, and software solutions. Our growth has been fueled by our dedication to client success and our commitment to staying at the forefront of technological innovations.
                 </p>
                 <p className="text-gray-700 leading-relaxed">
                   Today, we take pride in being trusted partners to businesses of all sizes, helping them navigate the digital landscape with confidence and achieve sustainable growth through technology.
@@ -182,7 +181,7 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">Client Partnership</h3>
                 <p className="text-gray-700 text-center">
-                  We view ourselves as an extension of our clients' teams, deeply investing in understanding their business and contributing to their long-term success.
+                  We view ourselves as an extension of our clients&apos; teams, deeply investing in understanding their business and contributing to their long-term success.
                 </p>
               </motion.div>
             </div>
@@ -383,7 +382,7 @@ export default function AboutPage() {
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-6">Ready to Work With Us?</h2>
             <p className="text-xl text-gray-700 mb-8 max-w-3xl mx-auto">
-              Let's discuss how our team can help bring your digital vision to life.
+              Let&apos;s discuss how our team can help bring your digital vision to life.
             </p>
             <Link 
               href="/contact" 

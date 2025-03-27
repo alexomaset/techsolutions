@@ -1,7 +1,6 @@
 "use client";
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
@@ -203,6 +202,24 @@ export default function ServicesPage() {
     return colorMap[color] || colorMap.blue;
   };
 
+  // Create refs individually instead of in a map callback
+  const service0Ref = useInView({ triggerOnce: true, threshold: 0.1 });
+  const service1Ref = useInView({ triggerOnce: true, threshold: 0.1 });
+  const service2Ref = useInView({ triggerOnce: true, threshold: 0.1 });
+  const service3Ref = useInView({ triggerOnce: true, threshold: 0.1 });
+  const service4Ref = useInView({ triggerOnce: true, threshold: 0.1 });
+  const service5Ref = useInView({ triggerOnce: true, threshold: 0.1 });
+  
+  // Array to easily access the refs by index
+  const serviceRefs = [
+    service0Ref,
+    service1Ref,
+    service2Ref,
+    service3Ref,
+    service4Ref,
+    service5Ref
+  ];
+
   return (
     <div className="pt-16">
       {/* Hero Section */}
@@ -244,19 +261,16 @@ export default function ServicesPage() {
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {services.map((service, index) => {
-                const [ref, inView] = useInView({
-                  triggerOnce: true,
-                  threshold: 0.1
-                });
+                const serviceRef = serviceRefs[index];
                 
                 const colorClasses = getColorClasses(service.color);
                 
                 return (
                   <motion.div
                     key={index}
-                    ref={ref}
+                    ref={serviceRef[0]}
                     initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
+                    animate={serviceRef[1] ? "visible" : "hidden"}
                     variants={cardVariant}
                     className={`${colorClasses.light} border ${colorClasses.border} rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300`}
                     whileHover={{ y: -10, transition: { duration: 0.3 } }}
@@ -498,7 +512,7 @@ export default function ServicesPage() {
           <div className="max-w-4xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">What Our Clients Say</h2>
             <p className="text-lg text-gray-700">
-              Don't just take our word for it - hear what our clients have to say about working with us.
+              Don&apos;t just take our word for it - hear what our clients have to say about working with us.
             </p>
           </div>
           
@@ -521,7 +535,7 @@ export default function ServicesPage() {
                   </div>
                 </div>
                 <p className="text-gray-700 mb-6 italic">
-                  "TechSolutions transformed our online presence with a stunning website that perfectly captures our brand. Their attention to detail and responsiveness throughout the project was impressive."
+                  &quot;TechSolutions transformed our outdated website into a modern, mobile-friendly platform that perfectly represents our brand. Their expertise and attention to detail were impressive throughout the project.&quot;
                 </p>
                 <div className="flex items-center">
                   <div className="h-12 w-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
@@ -551,7 +565,7 @@ export default function ServicesPage() {
                   </div>
                 </div>
                 <p className="text-gray-700 mb-6 italic">
-                  "The mobile app developed by TechSolutions has significantly increased our customer engagement and sales. Their team's technical expertise and creative approach delivered results beyond our expectations."
+                  &quot;Their SEO and content marketing strategy has significantly increased our online visibility. We&apos;re now ranking on the first page for our key search terms. Couldn&apos;t be happier with the results!&quot;
                 </p>
                 <div className="flex items-center">
                   <div className="h-12 w-12 bg-green-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
@@ -581,7 +595,7 @@ export default function ServicesPage() {
                   </div>
                 </div>
                 <p className="text-gray-700 mb-6 italic">
-                  "TechSolutions' digital marketing strategies have revolutionized our online presence. Their data-driven approach and creative content have significantly increased our traffic and conversion rates."
+                  &quot;As a small business owner, I&apos;m always looking for cost-effective solutions. TechSolutions delivered a beautiful e-commerce site within our budget and timeframe.&quot;
                 </p>
                 <div className="flex items-center">
                   <div className="h-12 w-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">

@@ -1,8 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { useRef } from 'react';
 
 // Animation variants
@@ -46,12 +45,11 @@ const popUp = {
 
 export default function Home() {
   const scrollRef = useRef(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ["start end", "end start"]
   });
-  
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   
   const services = [
     {
@@ -116,7 +114,7 @@ export default function Home() {
                 Transform Your Business with Technology
               </h1>
               <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-                We provide cutting-edge digital solutions to help your business thrive in the modern digital landscape. From web development to marketing, we've got you covered.
+                We provide cutting-edge digital solutions to help your business thrive in the modern digital landscape. From web development to marketing, we&apos;ve got you covered.
               </p>
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>

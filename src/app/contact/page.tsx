@@ -107,7 +107,7 @@ export default function ContactPage() {
           <div className="max-w-4xl mx-auto text-center">
             <motion.h1 variants={fadeIn} className="text-5xl font-bold text-gray-900 mb-6">Get in Touch</motion.h1>
             <motion.p variants={fadeIn} className="text-xl text-gray-700 mb-10 leading-relaxed">
-              We'd love to hear from you! Whether you have a question about our services, pricing, or just want to say hello, we're here to help.
+              We&apos;d love to hear from you! Whether you have a question about our services, pricing, or just want to say hello, we&apos;re here to help.
             </motion.p>
             <motion.div variants={fadeIn}>
               <div className="flex justify-center space-x-4">
@@ -145,7 +145,7 @@ export default function ContactPage() {
                       <svg className="h-5 w-5 mr-2 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <p>Thank you for your message! We'll get back to you soon.</p>
+                      <p>Thank you for your message! We&apos;ll get back to you soon.</p>
                     </div>
                   </motion.div>
                 )}
@@ -266,17 +266,16 @@ export default function ContactPage() {
                 <div className="space-y-8">
                   <div className="flex items-start space-x-4">
                     <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                      <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-blue-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-1">Our Location</h3>
+                      <h3 className="text-xl font-bold mb-2">Our Location</h3>
                       <p className="text-gray-700">
-                        123 Innovation Drive<br />
-                        Tech City, TC 10101<br />
-                        United States
+                        Visit our office to meet our team in person and discuss your project face-to-face.
+                      </p>
+                      <p className="text-blue-600 font-semibold">
+                        123 Business Avenue, Tech District,<br />City, State 12345
                       </p>
                     </div>
                   </div>
@@ -364,7 +363,7 @@ export default function ContactPage() {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
               <p className="text-lg text-gray-600">
-                Find answers to some of the questions we often receive
+                Here are answers to some questions we&apos;re often asked. If you don&apos;t see your question here, feel free to reach out!
               </p>
             </div>
             
@@ -456,7 +455,7 @@ export default function ContactPage() {
                   </summary>
                   <div className="px-6 pb-6 pt-2">
                     <p className="text-gray-700">
-                      Project timelines vary based on complexity and scope. A simple website may take 2-4 weeks, while a complex web application could take 2-6 months. We'll provide a detailed timeline during our initial consultation and keep you updated throughout the development process.
+                      Project timelines vary based on complexity and scope. A simple website may take 2-4 weeks, while a complex web application could take 2-6 months. We&apos;ll provide a detailed timeline during our initial consultation and keep you updated throughout the development process.
                     </p>
                   </div>
                 </details>
@@ -487,7 +486,7 @@ export default function ContactPage() {
                   </summary>
                   <div className="px-6 pb-6 pt-2">
                     <p className="text-gray-700">
-                      Yes, we offer several maintenance and support packages to ensure your digital assets remain secure, up-to-date, and performing optimally. These can include regular updates, security monitoring, performance optimization, content updates, and technical support. We'll work with you to determine the level of support that best fits your needs.
+                      Yes, we offer several maintenance and support packages to ensure your digital assets remain secure, up-to-date, and performing optimally. These can include regular updates, security monitoring, performance optimization, content updates, and technical support. We&apos;ll work with you to determine the level of support that best fits your needs.
                     </p>
                   </div>
                 </details>
