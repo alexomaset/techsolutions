@@ -501,137 +501,184 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Software Solutions Section */}
-      <section className="py-20 bg-white">
+      {/* Premium Software Solutions Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Premium Software Solutions</h2>
-                <p className="text-lg text-gray-600 mb-8">
-                  As an authorized reseller, we provide legitimate software licenses at competitive prices. Equip your business with industry-leading tools.
-                </p>
-                
-                <div className="space-y-4 mb-8">
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 h-6 w-6 bg-blue-100 rounded-full flex items-center justify-center mt-1">
-                      <svg className="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-semibold text-gray-900">Microsoft 365</h4>
-                      <p className="text-gray-600">Complete productivity suite for businesses of all sizes</p>
-                    </div>
+          <motion.div 
+            className="max-w-4xl mx-auto text-center mb-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
+            <motion.h2 variants={fadeInFromLeft} className="text-4xl font-bold text-gray-900 mb-6">
+              Premium Software Solutions
+            </motion.h2>
+            <motion.p variants={fadeInFromRight} className="text-xl text-gray-600">
+              Access industry-leading software tools with our authorized reseller program
+            </motion.p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Microsoft 365 */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+            >
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M11.5 2.75h-8a.75.75 0 00-.75.75v8c0 .414.336.75.75.75h8a.75.75 0 00.75-.75v-8a.75.75 0 00-.75-.75zm0 10h-8a.75.75 0 00-.75.75v8c0 .414.336.75.75.75h8a.75.75 0 00.75-.75v-8a.75.75 0 00-.75-.75zm10-10h-8a.75.75 0 00-.75.75v8c0 .414.336.75.75.75h8a.75.75 0 00.75-.75v-8a.75.75 0 00-.75-.75zm0 10h-8a.75.75 0 00-.75.75v8c0 .414.336.75.75.75h8a.75.75 0 00.75-.75v-8a.75.75 0 00-.75-.75z"/>
+                    </svg>
                   </div>
-                  
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 h-6 w-6 bg-blue-100 rounded-full flex items-center justify-center mt-1">
-                      <svg className="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-semibold text-gray-900">Adobe Creative Cloud</h4>
-                      <p className="text-gray-600">Professional creative tools for designers and content creators</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 h-6 w-6 bg-blue-100 rounded-full flex items-center justify-center mt-1">
-                      <svg className="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-semibold text-gray-900">Cloud Services</h4>
-                      <p className="text-gray-600">Secure cloud storage and computing solutions</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 h-6 w-6 bg-blue-100 rounded-full flex items-center justify-center mt-1">
-                      <svg className="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="text-lg font-semibold text-gray-900">Cybersecurity Solutions</h4>
-                      <p className="text-gray-600">Enterprise-grade protection for your business data</p>
-                    </div>
-                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">Microsoft 365</h3>
                 </div>
-                
-                <Link href="/services#software" className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-lg">
-                  View Software Catalog
-                </Link>
-              </motion.div>
-              
-              <motion.div
-                className="relative"
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="relative h-[400px] bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl overflow-hidden shadow-2xl">
-                  <div className="absolute inset-0 opacity-20">
-                    <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-white opacity-20"></div>
-                    <div className="absolute bottom-10 left-20 h-40 w-40 rounded-full bg-white opacity-20"></div>
+                <p className="text-gray-600 mb-4">Complete suite of productivity tools including Word, Excel, PowerPoint, and Teams</p>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Cloud-based collaboration
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Regular updates
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    1TB cloud storage
+                  </li>
+                </ul>
+                <a href="#" className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700">
+                  Learn more
+                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Adobe Creative Cloud */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+            >
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-red-600" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
                   </div>
-                  
-                  <div className="relative h-full flex items-center justify-center p-8">
-                    <div className="bg-white rounded-lg shadow-xl p-6 max-w-sm">
-                      <div className="flex items-center mb-6">
-                        <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                          <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-bold text-gray-900">Authorized Reseller</h3>
-                          <p className="text-sm text-gray-600">Official partner & certified provider</p>
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-between border-b border-gray-100 pb-2">
-                          <span className="text-gray-600">Microsoft 365 Business</span>
-                          <span className="text-blue-600 font-semibold">From $12.50/mo</span>
-                        </div>
-                        <div className="flex items-center justify-between border-b border-gray-100 pb-2">
-                          <span className="text-gray-600">Adobe Creative Cloud</span>
-                          <span className="text-blue-600 font-semibold">From $52.99/mo</span>
-                        </div>
-                        <div className="flex items-center justify-between border-b border-gray-100 pb-2">
-                          <span className="text-gray-600">Cloud Storage (1TB)</span>
-                          <span className="text-blue-600 font-semibold">From $9.99/mo</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-gray-600">Security Suite</span>
-                          <span className="text-blue-600 font-semibold">From $15.99/mo</span>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-6 bg-blue-50 rounded-lg p-3 text-sm text-blue-800">
-                        <strong>Special Offer:</strong> 10% discount on annual subscriptions
-                      </div>
-                    </div>
+                  <h3 className="text-xl font-bold text-gray-900">Adobe Creative Cloud</h3>
+                </div>
+                <p className="text-gray-600 mb-4">Professional creative tools for design, video, and photography</p>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    All Adobe apps included
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Cloud storage
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Regular updates
+                  </li>
+                </ul>
+                <a href="#" className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700">
+                  Learn more
+                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Cloud Services */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+            >
+              <div className="p-6">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                    <svg className="w-6 h-6 text-purple-600" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09v6.91L12 21 1 15.82V9l11-6z"/>
+                    </svg>
                   </div>
+                  <h3 className="text-xl font-bold text-gray-900">Cloud Services</h3>
                 </div>
-                
-                <div className="absolute -top-6 -right-6 bg-yellow-400 rounded p-4 shadow-lg transform rotate-12 z-10">
-                  <div className="text-sm font-bold">AUTHORIZED</div>
-                  <div className="text-xs">RESELLER</div>
-                </div>
-              </motion.div>
-            </div>
+                <p className="text-gray-600 mb-4">Scalable cloud infrastructure and hosting solutions</p>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    AWS & Azure certified
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    24/7 support
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Scalable solutions
+                  </li>
+                </ul>
+                <a href="#" className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700">
+                  Learn more
+                  <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </motion.div>
           </div>
+
+          <motion.div 
+            className="mt-16 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <a 
+              href="#" 
+              className="inline-flex items-center px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition duration-300"
+            >
+              View All Software Solutions
+              <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </motion.div>
         </div>
       </section>
 
