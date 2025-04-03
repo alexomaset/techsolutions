@@ -10,16 +10,6 @@ const fadeIn = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
 };
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
-
 const cardVariant = {
   hidden: { opacity: 0, y: 50 },
   visible: { 
@@ -221,39 +211,36 @@ export default function ServicesPage() {
   ];
 
   return (
-    <div className="pt-16">
+    <div className="bg-gray-50">
       {/* Hero Section */}
-      <motion.section 
-        ref={headerRef}
-        initial="hidden"
-        animate={headerInView ? "visible" : "hidden"}
-        variants={staggerContainer}
-        className="py-20 bg-gradient-to-br from-indigo-50 to-white relative overflow-hidden"
-      >
-        <div className="absolute right-0 top-0 -mr-16 -mt-16 w-64 h-64 bg-indigo-100 rounded-full opacity-60"></div>
-        <div className="absolute left-0 bottom-0 -ml-16 -mb-16 w-80 h-80 bg-blue-100 rounded-full opacity-40"></div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.div variants={fadeIn} className="inline-block px-4 py-1 bg-blue-100 rounded-full text-blue-700 text-sm font-semibold mb-6">
-              Our Services
-            </motion.div>
-            <motion.h1 variants={fadeIn} className="text-5xl font-bold text-gray-900 mb-6">
-              Comprehensive Digital Solutions for Your Business
-            </motion.h1>
-            <motion.p variants={fadeIn} className="text-xl text-gray-700 mb-10 leading-relaxed">
-              We offer a wide range of services designed to help your business thrive in the digital landscape. From web development to digital marketing, we have the expertise to meet your needs.
-            </motion.p>
-            <motion.div variants={fadeIn}>
-              <div className="flex justify-center space-x-4">
-                <div className="h-1 w-20 bg-blue-600 rounded-full"></div>
-                <div className="h-1 w-10 bg-blue-400 rounded-full"></div>
-                <div className="h-1 w-5 bg-blue-300 rounded-full"></div>
-              </div>
-            </motion.div>
-          </div>
+      <div className="pt-28 pb-16 bg-gradient-to-br from-white to-yellow-50" ref={headerRef}>
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="max-w-4xl mx-auto text-center"
+            initial="hidden"
+            animate={headerInView ? "visible" : "hidden"}
+            variants={fadeIn}
+          >
+            <span className="inline-block px-4 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium mb-4">
+              OUR SERVICES
+            </span>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Cutting-Edge Technology Solutions for Your Business
+            </h1>
+            <p className="text-xl text-gray-600 mb-8">
+              We deliver innovative digital solutions tailored to meet your unique business needs
+            </p>
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
+              <Link href="/contact" className="px-6 py-3 bg-yellow-500 text-white rounded-lg font-medium hover:bg-yellow-600 transition duration-300 inline-flex items-center justify-center">
+                Get a Free Consultation
+              </Link>
+              <Link href="#services" className="px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition duration-300 inline-flex items-center justify-center">
+                Explore Services
+              </Link>
+            </div>
+          </motion.div>
         </div>
-      </motion.section>
+      </div>
 
       {/* Services Grid */}
       <section className="py-16 bg-white">

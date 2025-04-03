@@ -1,79 +1,54 @@
 "use client";
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   return (
-    <nav className="bg-white shadow-md fixed w-full z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center">
-              <span className="text-2xl font-bold text-blue-600">TechSolutions</span>
-            </Link>
-          </div>
-          
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium transition-colors duration-300">
-              HOME
-            </Link>
-            <Link href="/about" className="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium transition-colors duration-300">
-              ABOUT US
-            </Link>
-            <Link href="/services" className="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium transition-colors duration-300">
-              OUR SERVICES
-            </Link>
-            <Link href="/contact" className="text-gray-800 hover:text-blue-600 px-3 py-2 font-medium transition-colors duration-300">
-              CONTACT US
-            </Link>
-          </div>
-          
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none"
-              aria-expanded="false"
+    <motion.header
+      className="fixed top-0 left-0 right-0 bg-yellow-500/95 backdrop-blur-md py-5 z-50 shadow-md"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="container mx-auto px-6 flex justify-between items-center">
+        <Link href="/" className="text-2xl font-bold text-white flex items-center">
+          <svg className="w-8 h-8 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          TechSolutions
+        </Link>
+        
+        <nav className="hidden md:flex items-center space-x-1">
+          {[
+            { name: "Services", href: "/services" },
+            { name: "Projects", href: "/projects" },
+            { name: "About", href: "/about" },
+            { name: "Contact", href: "/contact" }
+          ].map((item, index) => (
+            <Link 
+              key={index}
+              href={item.href} 
+              className="px-4 py-2 text-white hover:bg-yellow-600 rounded-lg transition-colors font-medium"
             >
-              <span className="sr-only">Open main menu</span>
-              {isMenuOpen ? (
-                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
+              {item.name}
+            </Link>
+          ))}
+          <Link 
+            href="/contact" 
+            className="ml-2 px-6 py-2 bg-white text-yellow-600 rounded-lg font-semibold hover:bg-yellow-50 transition-colors shadow-sm"
+          >
+            Get Started
+          </Link>
+        </nav>
+        
+        <button className="md:hidden p-2 bg-yellow-600 rounded-lg text-white">
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
       </div>
-
-      {/* Mobile menu, show/hide based on menu state */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg absolute w-full">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link href="/" className="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium hover:bg-gray-50 rounded-md">
-              HOME
-            </Link>
-            <Link href="/about" className="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium hover:bg-gray-50 rounded-md">
-              ABOUT US
-            </Link>
-            <Link href="/services" className="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium hover:bg-gray-50 rounded-md">
-              OUR SERVICES
-            </Link>
-            <Link href="/contact" className="block px-3 py-2 text-gray-800 hover:text-blue-600 font-medium hover:bg-gray-50 rounded-md">
-              CONTACT US
-            </Link>
-          </div>
-        </div>
-      )}
-    </nav>
+    </motion.header>
   );
 };
 
