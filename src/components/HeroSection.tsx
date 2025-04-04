@@ -62,7 +62,7 @@ const HeroSection = () => {
     >
       {/* Background overlay for better text visibility */}
       <div className="absolute inset-0 bg-black/40 -z-10"></div>
-      <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/30 via-orange-500/30 to-red-500/30 -z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/30 via-yellow-400/30 to-yellow-300/30 -z-10"></div>
       
       <div className="container mx-auto px-4">
         <motion.div 
@@ -70,21 +70,21 @@ const HeroSection = () => {
           variants={fadeInFromLeft}
         >
           <motion.div 
-            className="inline-block px-4 py-1 mb-6 bg-yellow-100 text-yellow-800 rounded-full"
+            className="inline-block px-4 py-1 mb-6 bg-yellow-500 text-gray-900 rounded-full"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <span className="font-semibold text-sm">Innovative Tech Solutions</span>
           </motion.div>
           <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 leading-tight">
-            Transform Your Business with <span className="text-yellow-400">Technology</span>
+            Transform Your Business with <span className="text-yellow-500">Technology</span>
           </h1>
           <p className="text-xl text-gray-100 mb-8 leading-relaxed max-w-2xl mx-auto">
             We deliver cutting-edge technology solutions that drive innovation, efficiency, and growth for your business.
           </p>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/contact" className="px-8 py-4 bg-yellow-500 text-white rounded-lg font-semibold hover:bg-yellow-600 transition duration-300 shadow-lg inline-flex items-center">
+              <Link href="/contact" className="px-8 py-4 bg-yellow-500 text-gray-900 rounded-lg font-semibold hover:bg-yellow-600 transition duration-300 shadow-lg inline-flex items-center">
                 Get Started
                 <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -115,7 +115,7 @@ const HeroSection = () => {
                 Our Platform
               </motion.h3>
               <motion.h2 
-                className="text-3xl md:text-4xl font-bold text-yellow-400"
+                className="text-3xl md:text-4xl font-bold text-yellow-500"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
@@ -130,7 +130,7 @@ const HeroSection = () => {
                 variants={statAnimation}
               >
                 <motion.div 
-                  className="text-5xl font-bold text-yellow-400 mb-2"
+                  className="text-5xl font-bold text-yellow-500 mb-2"
                   variants={numberCounter}
                 >
                   100+
@@ -145,7 +145,7 @@ const HeroSection = () => {
                 variants={statAnimation}
               >
                 <motion.div 
-                  className="text-5xl font-bold text-yellow-400 mb-2"
+                  className="text-5xl font-bold text-yellow-500 mb-2"
                   variants={numberCounter}
                 >
                   50+
@@ -160,7 +160,7 @@ const HeroSection = () => {
                 variants={statAnimation}
               >
                 <motion.div 
-                  className="text-5xl font-bold text-yellow-400 mb-2"
+                  className="text-5xl font-bold text-yellow-500 mb-2"
                   variants={numberCounter}
                 >
                   24/7

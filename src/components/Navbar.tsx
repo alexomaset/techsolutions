@@ -57,7 +57,7 @@ const Navbar = () => {
       transition={{ duration: 0.5 }}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold text-white flex items-center">
+        <Link href="/" className="text-2xl font-bold text-gray-900 flex items-center">
           <svg className="w-8 h-8 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
@@ -70,14 +70,14 @@ const Navbar = () => {
             <Link 
               key={index}
               href={item.href} 
-              className="px-4 py-2 text-white hover:bg-yellow-600 rounded-lg transition-colors font-medium"
+              className="px-4 py-2 text-gray-900 hover:bg-yellow-600 hover:text-white rounded-lg transition-colors font-medium"
             >
               {item.name}
             </Link>
           ))}
           <Link 
             href="/contact" 
-            className="ml-2 px-6 py-2 bg-white text-yellow-600 rounded-lg font-semibold hover:bg-yellow-50 transition-colors shadow-sm"
+            className="ml-2 px-6 py-2 bg-gray-900 text-yellow-500 rounded-lg font-semibold hover:bg-gray-800 transition-colors shadow-sm"
           >
             Get Started
           </Link>
@@ -85,7 +85,7 @@ const Navbar = () => {
         
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden p-2 bg-yellow-600 hover:bg-yellow-700 transition-colors rounded-lg text-white focus:outline-none"
+          className="md:hidden p-2 bg-gray-900 hover:bg-gray-800 transition-colors rounded-lg text-yellow-500 focus:outline-none"
           onClick={() => setIsOpen(!isOpen)}
           aria-label={isOpen ? 'Close Menu' : 'Open Menu'}
         >
@@ -125,7 +125,7 @@ const Navbar = () => {
                   >
                     <Link 
                       href={item.href}
-                      className="block px-4 py-3 text-white text-xl font-medium hover:bg-yellow-600 rounded-lg transition-colors"
+                      className="block px-4 py-3 text-gray-900 text-xl font-medium hover:bg-yellow-600 hover:text-white rounded-lg transition-colors"
                       onClick={() => setIsOpen(false)}
                     >
                       {item.name}
@@ -139,7 +139,7 @@ const Navbar = () => {
                 >
                   <Link 
                     href="/contact"
-                    className="block px-6 py-3 mt-4 bg-white text-yellow-600 text-xl font-bold rounded-lg shadow-md hover:bg-yellow-50 transition-colors text-center"
+                    className="block px-6 py-3 mt-4 bg-gray-900 text-yellow-500 text-xl font-bold rounded-lg shadow-md hover:bg-gray-800 transition-colors text-center"
                     onClick={() => setIsOpen(false)}
                   >
                     Get Started

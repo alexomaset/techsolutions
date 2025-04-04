@@ -35,7 +35,7 @@ export default function Home() {
       <div className="text-center mt-8">
         <Link 
           href="/projects" 
-          className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-yellow-500 text-white rounded-lg font-semibold hover:bg-yellow-600 transition-all shadow-lg"
+          className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-yellow-500 text-gray-900 rounded-lg font-semibold hover:bg-yellow-600 transition-all shadow-lg"
         >
           View All Projects
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
