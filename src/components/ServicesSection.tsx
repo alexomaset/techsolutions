@@ -62,14 +62,14 @@ const services = [
 
 const ServicesSection = () => {
   return (
-    <section className="py-20 bg-gradient-to-br from-white to-yellow-50">
+    <section className="py-20 pt-32 md:pt-36 bg-gradient-to-br from-white to-yellow-50 relative z-10">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <motion.h2 
             className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
           >
             Our Premium Services
@@ -78,7 +78,7 @@ const ServicesSection = () => {
             className="text-xl text-gray-600 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             We offer a comprehensive range of digital services to help your business thrive
