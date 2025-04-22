@@ -1,37 +1,38 @@
 "use client";
 
-import { useRef } from 'react';
-import { useScroll } from 'framer-motion';
 import Link from 'next/link';
 
 // Import modular components
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ServicesSection from '@/components/ServicesSection';
-import StatsSection from '@/components/StatsSection';
 import ProjectsSection from '@/components/ProjectsSection';
 import GraphicsPortfolio from '@/components/GraphicsPortfolio';
 import SoftwareSolutions from '@/components/SoftwareSolutions';
 import CTASection from '@/components/CTASection';
+import Chatbot from '@/components/Chatbot';
+
+// Removed scroll hooks; using CSS sticky for hero
 
 export default function Home() {
-  const scrollRef = useRef(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { scrollYProgress } = useScroll({
-    target: scrollRef,
-    offset: ["start end", "end start"]
-  });
-  
+  // no scroll hooks needed for sticky hero
+
   return (
     <div className="overflow-x-hidden">
       <Navbar />
-      <HeroSection />
-      <ServicesSection />
-      <StatsSection />
-      <ProjectsSection />
-      <GraphicsPortfolio />
-      <SoftwareSolutions />
-      <CTASection />
+      {/* 1) Sticky hero */}
+      <div className="sticky top-0 h-screen overflow-hidden z-0">
+        <HeroSection />
+      </div>
+
+      {/* 2) Content scrolling over hero */}
+      <div className="relative z-10">
+        <ProjectsSection />
+        <ServicesSection />
+        <GraphicsPortfolio />
+        <SoftwareSolutions />
+        <CTASection />
+      </div>
       <div className="text-center mt-8">
         <Link 
           href="/projects" 
@@ -43,6 +44,7 @@ export default function Home() {
           </svg>
         </Link>
       </div>
+      <Chatbot />
     </div>
   );
 }

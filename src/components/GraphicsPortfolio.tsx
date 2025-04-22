@@ -226,8 +226,9 @@ const GraphicsPortfolio = () => {
           ))}
         </motion.div>
 
-        {/* Carousel */}
+        {/* Carousel Layer 1 */}
         <div className="relative max-w-6xl mx-auto px-10" ref={carouselRef}>
+
           {/* Carousel Controls */}
           <div className="absolute inset-y-0 left-0 flex items-center z-10">
             <motion.button
@@ -349,6 +350,7 @@ const GraphicsPortfolio = () => {
             </div>
           </div>
         </div>
+
 
         {/* View All Button */}
         <motion.div 
