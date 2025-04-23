@@ -69,19 +69,32 @@ interface AnimatedTitleProps {
 }
 
 const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
-  const letters = text.split("");
-
+  const words = text.split(" ");
+  
   return (
-    <div className="overflow-visible w-full">
-      <div className="flex flex-wrap overflow-visible whitespace-normal">
-        {letters.map((letter, index) => (
-          <AnimatedLetter
-            key={index}
-            text={letter === " " ? "\u00A0" : letter}
-            index={index}
-          />
-        ))}
-      </div>
+    <div className="overflow-visible w-full flex flex-col">
+      {words.map((word, wordIndex) => (
+        <div key={wordIndex} className="overflow-hidden">
+          <motion.div
+            className={`inline-block ${wordIndex === 0 ? "text-yellow-300" : wordIndex === words.length - 1 ? "text-amber-400" : ""}`}
+            variants={{
+              hidden: { y: 100, opacity: 0 },
+              visible: { 
+                y: 0, 
+                opacity: 1,
+                transition: { 
+                  delay: wordIndex * 0.15,
+                  duration: 0.5,
+                  ease: "easeOut"
+                }
+              }
+            }}
+          >
+            {word}
+            {wordIndex !== words.length - 1 && <span>&nbsp;</span>}
+          </motion.div>
+        </div>
+      ))}
     </div>
   );
 };
@@ -94,7 +107,7 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({ parallaxY }) => {
   return (
     <motion.section
-      className="relative w-full min-h-screen flex items-center overflow-hidden rounded-xl" // Added rounded-xl here
+      className="relative w-full min-h-screen flex items-center overflow-hidden rounded-xl"
       style={{ y: parallaxY ?? 0 }}
     >
       {/* Background image */}
@@ -131,16 +144,20 @@ const HeroSection: React.FC<HeroSectionProps> = ({ parallaxY }) => {
               Innovative Tech Solutions
             </motion.div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight tracking-tight break-words">
-              <motion.div
-                className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-yellow-200 w-full overflow-visible whitespace-normal"
-                initial="hidden"
-                animate="visible"
-                variants={fadeInDelay}
-              >
-                <AnimatedTitle text="Transform Your Business with Technology" />
-              </motion.div>
-            </h1>
+            {/* Simplified, highly visible hero title */}
+            <motion.div
+              className="mb-6"
+              variants={fadeInDelay}
+            >
+              <h1 className="font-extrabold leading-tight tracking-tight">
+                <span className="block text-4xl md:text-5xl lg:text-6xl text-yellow-300 mb-2 drop-shadow-md">Transform</span>
+                <span className="block text-4xl md:text-5xl lg:text-6xl text-yellow-200 mb-2 drop-shadow-md">Your Business</span>
+                <span className="block text-4xl md:text-5xl lg:text-6xl">
+                  <span className="text-yellow-200">with</span>
+                  <span className="text-yellow-400 ml-3">Technology</span>
+                </span>
+              </h1>
+            </motion.div>
 
             <motion.p
               className="text-gray-200 text-lg md:text-xl mb-8 max-w-lg"

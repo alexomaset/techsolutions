@@ -127,7 +127,7 @@ const ProjectsSection = () => {
   };
 
   return (
-    <motion.section className="py-20 bg-gray-50 rounded-xl" // Added rounded-xl here
+    <motion.section className="py-20 bg-gray-50/95 backdrop-blur-sm rounded-xl"
       initial="hidden"
       whileInView="visible"
       variants={containerVariants}
