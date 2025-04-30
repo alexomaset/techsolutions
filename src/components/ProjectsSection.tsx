@@ -1,280 +1,202 @@
-import Link from 'next/link';
-import { motion } from 'framer-motion';
+"use client";
 
-// Featured projects to showcase our best work
-const featuredProjects = [
+import { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+
+// Web projects data
+const webProjects = [
   {
-    title: "E-commerce Platform Redesign",
-    client: "FashionForward",
-    type: "Web Development",
-    description: "Complete redesign of an e-commerce platform resulting in 43% increase in conversions and 68% higher average order value.",
-    color: "bg-gradient-to-r from-blue-500 to-indigo-600"
+    id: 1,
+    title: "Mammot Digital Marketing",
+    client: "Mammot",
+    description: "A professional digital marketing agency website with modern UI, comprehensive service showcases, and interactive portfolio display.",
+    technologies: ["Next.js", "TailwindCSS", "Framer Motion", "Responsive Design"],
+    image: "/images/projects/corporate.jpg",
+    liveUrl: "https://mammot.vercel.app/",
+    category: "Corporate"
   },
   {
-    title: "Social Media Campaign",
-    client: "EcoFriendly Products",
-    type: "Digital Marketing",
-    description: "Strategic social media campaign that generated 2.5M impressions, 350K engagements, and a 215% ROI within 3 months.",
-    color: "bg-gradient-to-r from-green-500 to-teal-500"
+    id: 2,
+    title: "Revontulia",
+    client: "Revontulia",
+    description: "Minimalist and elegant website with creative animations and stunning visual design for enhanced user experience.",
+    technologies: ["React", "CSS Animations", "Modern UI/UX"],
+    image: "/images/projects/creative.jpg",
+    liveUrl: "https://www.revontulia.com/",
+    category: "Creative"
   },
   {
-    title: "Corporate Brand Identity",
-    client: "TechInnovate",
-    type: "Graphic Design",
-    description: "Complete brand overhaul including logo, typography, color palette, and marketing materials that increased brand recognition by 37%.",
-    color: "bg-gradient-to-r from-purple-500 to-pink-500"
-  },
-  {
-    title: "Mobile App Development",
-    client: "HealthTrack",
-    type: "Mobile Development",
-    description: "Developed a health tracking app with 4.8-star rating and over 500,000 downloads across iOS and Android platforms.",
-    color: "bg-gradient-to-r from-red-500 to-orange-500"
+    id: 3,
+    title: "E-commerce Platform",
+    client: "StyleShop",
+    description: "A fully responsive e-commerce platform with advanced filtering, shopping cart, and secure payment integration.",
+    technologies: ["Next.js", "Tailwind CSS", "Stripe", "MongoDB"],
+    image: "/images/projects/ecommerce.jpg",
+    liveUrl: "#",
+    category: "E-commerce"
   }
 ];
 
-const ProjectsSection = () => {
-  // Container animation variants
-  const containerVariants = {
+// Project categories
+const projectCategories = [
+  'All',
+  'Corporate',
+  'Creative',
+  'E-commerce',
+  'Web Application',
+  'Mobile App',
+  'Education'
+];
+
+export default function ProjectsSection() {
+  const [activeCategory, setActiveCategory] = useState('All');
+  const ref = useRef(null);
+
+  // Filter projects based on selected category
+  const filteredProjects = activeCategory === 'All' 
+    ? webProjects 
+    : webProjects.filter(item => item.category === activeCategory);
+
+  // Animation variants
+  const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
+        staggerChildren: 0.1
       }
     }
   };
 
-  // Project card animation variants
-  const projectVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
       y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12
-      }
-    },
-    hover: {
-      y: -15,
-      scale: 1.03,
-      boxShadow: "0px 20px 25px rgba(0, 0, 0, 0.15)",
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 15
-      }
-    }
-  };
-
-  // Icon animation variants
-  const iconVariants = {
-    initial: { scale: 1 },
-    hover: {
-      scale: 1.2,
-      rotate: 5,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10
-      }
-    }
-  };
-
-  // Button animation variants
-  const buttonVariants = {
-    initial: { scale: 1 },
-    hover: {
-      scale: 1.05,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 10
-      }
-    },
-    tap: {
-      scale: 0.95
-    }
-  };
-
-  // Text reveal animation
-  const textRevealVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    })
-  };
-
-  // Arrow animation for "View Details"
-  const arrowVariants = {
-    initial: { x: 0 },
-    hover: {
-      x: 5,
-      transition: {
-        repeat: Infinity,
-        repeatType: "reverse" as const,
-        duration: 0.6
-      }
+      transition: { duration: 0.6 }
     }
   };
 
   return (
-    <motion.section className="py-20 bg-gray-50/95 backdrop-blur-sm rounded-xl"
-      initial="hidden"
-      whileInView="visible"
-      variants={containerVariants}
-      viewport={{ once: true, margin: "-100px" }}
-    >
+    <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <motion.p
-            className="text-blue-600 font-semibold mb-2"
-            variants={textRevealVariants}
-            custom={0}
-          >
-            PORTFOLIO HIGHLIGHTS
-          </motion.p>
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
-            variants={textRevealVariants}
-            custom={1}
-          >
-            Our Featured Projects
-          </motion.h2>
-          <motion.p
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
-            variants={textRevealVariants}
-            custom={2}
-          >
-            A selection of our most successful client work
-          </motion.p>
-        </div>
+        {/* Header */}
+        <motion.div 
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className="text-yellow-500 font-semibold uppercase tracking-wider">Our Work</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">Featured Projects</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Browse our collection of real-world projects and creative designs we&apos;ve delivered for clients
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {featuredProjects.map((project, index) => (
-            <motion.div
-              key={index}
-              className="overflow-hidden rounded-tl-xl rounded-tr-xl rounded-bl-xl rounded-br-xl shadow-lg group"
-              variants={projectVariants}
-              whileHover="hover"
+        {/* Category filter */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-2 mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          ref={ref}
+        >
+          {projectCategories.map((category, index) => (
+            <motion.button
+              key={category}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeCategory === category
+                  ? 'bg-yellow-500 text-white shadow-md'
+                  : 'bg-white text-gray-600 hover:bg-yellow-100'
+              }`}
+              onClick={() => setActiveCategory(category)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.3 + index * 0.05 }}
             >
-              <div className={`p-8 ${project.color} text-white h-full`}>
-                <motion.div
-                  className="mb-6"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 + index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <span className="px-3 py-1 bg-white bg-opacity-20 rounded text-sm font-medium">
-                    {project.type}
+              {category}
+            </motion.button>
+          ))}
+        </motion.div>
+
+        {/* Projects Grid */}
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+        >
+          {filteredProjects.map((project) => (
+            <motion.div
+              key={project.id}
+              className={`bg-white rounded-xl overflow-hidden shadow-lg group hover:shadow-xl transition-all duration-300 ${project.id <= 2 ? 'border-2 border-yellow-400' : ''}`}
+              variants={cardVariants}
+              whileHover={{ y: -10 }}
+            >
+              {project.id <= 2 && (
+                <div className="absolute top-4 right-4 z-10">
+                  <span className="px-3 py-1 bg-yellow-500 text-white text-xs rounded-full shadow-md">
+                    Featured Client
                   </span>
-                </motion.div>
-                <motion.h3
-                  className="text-2xl font-bold mb-2"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  {project.title}
-                </motion.h3>
-                <motion.p
-                  className="text-sm mb-4"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  Client: {project.client}
-                </motion.p>
-                <motion.p
-                  className="mb-6 opacity-90"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.5 + index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  {project.description}
-                </motion.p>
-                <div className="flex justify-between items-center">
-                  <motion.div
-                    initial="initial"
-                    whileHover="hover"
+                </div>
+              )}
+              <div className="relative h-60 overflow-hidden">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                  <span className="inline-block px-3 py-1 bg-yellow-500 text-white text-xs rounded-full mb-2">
+                    {project.category}
+                  </span>
+                  <h3 className="text-white font-bold text-xl">{project.title}</h3>
+                  <p className="text-white/80 text-sm">Client: {project.client}</p>
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
+                  <p className="text-gray-600">{project.description}</p>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.technologies.map((tech, index) => (
+                    <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex justify-end">
+                  <Link 
+                    href={project.liveUrl} 
+                    className={`inline-flex items-center font-semibold transition-colors ${
+                      project.liveUrl !== "#" 
+                        ? "text-yellow-600 hover:text-yellow-700" 
+                        : "text-gray-400 cursor-not-allowed"
+                    }`}
+                    target={project.liveUrl !== "#" ? "_blank" : ""}
+                    rel={project.liveUrl !== "#" ? "noopener noreferrer" : ""}
                   >
-                    <Link href="/services" className="text-white hover:underline font-semibold flex items-center">
-                      View Details
-                      <motion.svg
-                        className="ml-2 h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        variants={arrowVariants}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </motion.svg>
-                    </Link>
-                  </motion.div>
-                  <motion.div
-                    className="w-12 h-12 rounded-full bg-white bg-opacity-20 flex items-center justify-center"
-                    variants={iconVariants}
-                    initial="initial"
-                    whileHover="hover"
-                  >
-                    {index === 0 && (
-                      <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    {project.liveUrl !== "#" ? "Visit Live Site" : "Coming Soon"}
+                    {project.liveUrl !== "#" && (
+                      <svg className="ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                       </svg>
                     )}
-                    {index === 1 && (
-                      <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-                      </svg>
-                    )}
-                    {index === 2 && (
-                      <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                      </svg>
-                    )}
-                    {index === 3 && (
-                      <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                      </svg>
-                    )}
-                  </motion.div>
+                  </Link>
                 </div>
               </div>
             </motion.div>
           ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <motion.div
-            initial="initial"
-            whileHover="hover"
-            whileTap="tap"
-          >
-            <motion.div
-              variants={buttonVariants}
-            >
-              <Link href="/services" className="inline-block px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-lg">
-                View All Projects
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
-};
-
-export default ProjectsSection;
+}

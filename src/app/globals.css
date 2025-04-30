@@ -182,3 +182,41 @@ body {
   background-color: white;
   z-index: 2;
 }
+
+/* Loader styles */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.6;
+    box-shadow: 0 0 15px rgba(255, 203, 5, 0.4);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 30px rgba(255, 203, 5, 0.7);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce-dot {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+/* Add a class for no-scroll when loader is active */
+.no-scroll {
+  overflow: hidden;
+  height: 100%;
+}

@@ -26,12 +26,12 @@ export default function Home() {
       <div className="content-wrapper">
         {/* Projects section starts after the hero height */}
         <div className="projects-section">
+        <ServicesSection />
           <ProjectsSection />
         </div>
         
         {/* Remaining content with solid background */}
         <div className="remaining-content">
-          <ServicesSection />
           <GraphicsPortfolio />
           <SoftwareSolutions />
           <CTASection />

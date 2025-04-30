@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion, MotionValue } from 'framer-motion';
 
 
@@ -19,10 +18,7 @@ const slideFromLeft = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
-const slideFromRight = {
-  hidden: { opacity: 0, x: 50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }
-};
+
 
 // Staggered children animation
 const staggerContainer = {
@@ -35,69 +31,6 @@ const staggerContainer = {
   }
 };
 
-interface AnimatedLetterProps {
-  text: string;
-  index: number;
-}
-
-const AnimatedLetter: React.FC<AnimatedLetterProps> = ({ text, index }) => {
-  return (
-    <motion.span
-      custom={index}
-      variants={{
-        hidden: { opacity: 0, y: 20 },
-        visible: (i: number) => ({
-          opacity: 1,
-          y: 0,
-          transition: {
-            delay: i * 0.06,
-            duration: 0.5
-          }
-        })
-      }}
-      initial="hidden"
-      animate="visible"
-      className="inline-block"
-    >
-      {text}
-    </motion.span>
-  );
-};
-
-interface AnimatedTitleProps {
-  text: string;
-}
-
-const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
-  const words = text.split(" ");
-  
-  return (
-    <div className="overflow-visible w-full flex flex-col">
-      {words.map((word, wordIndex) => (
-        <div key={wordIndex} className="overflow-hidden">
-          <motion.div
-            className={`inline-block ${wordIndex === 0 ? "text-yellow-300" : wordIndex === words.length - 1 ? "text-amber-400" : ""}`}
-            variants={{
-              hidden: { y: 100, opacity: 0 },
-              visible: { 
-                y: 0, 
-                opacity: 1,
-                transition: { 
-                  delay: wordIndex * 0.15,
-                  duration: 0.5,
-                  ease: "easeOut"
-                }
-              }
-            }}
-          >
-            {word}
-            {wordIndex !== words.length - 1 && <span>&nbsp;</span>}
-          </motion.div>
-        </div>
-      ))}
-    </div>
-  );
-};
 
 // Parallax prop to control vertical offset
 interface HeroSectionProps {
@@ -110,13 +43,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ parallaxY }) => {
       className="relative w-full min-h-screen flex items-center overflow-hidden rounded-xl"
       style={{ y: parallaxY ?? 0 }}
     >
-      {/* Background image */}
-      <Image
-        src="/bg.webp"
-        alt="Hero background"
-        fill
-        priority
-        className="absolute inset-0 object-cover object-center brightness-90 -z-10"
+      {/* Background video */}
+      <video
+        src="/Intro.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 object-cover object-center brightness-90 -z-10 w-full h-full"
       />
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -130,9 +64,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ parallaxY }) => {
       {/* Main content container */}
       <div className="container mx-auto px-4 relative z-10 overflow-visible">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-          {/* Text content column - full width on mobile, 8/12 on larger screens to ensure more space */}
+          {/* Text content column - left side */}
           <motion.div
-            className="md:col-span-8 text-center md:text-left px-2 md:px-4 py-8 mx-auto md:mx-0 overflow-visible"
+            className="md:col-span-7 text-center md:text-left px-2 md:px-4 py-8 mx-auto md:mx-0 overflow-visible"
             initial="hidden"
             animate="visible"
             variants={slideFromLeft}
@@ -160,7 +94,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ parallaxY }) => {
             </motion.div>
 
             <motion.p
-              className="text-gray-200 text-lg md:text-xl mb-8 max-w-lg"
+              className="text-gray-200 text-lg md:text-xl mb-8 max-w-lg md:max-w-xl"
               variants={fadeInDelay}
             >
               We deliver cutting-edge technology solutions that drive innovation, streamline operations, and accelerate growth.
@@ -210,15 +144,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ parallaxY }) => {
             </motion.div>
           </motion.div>
 
-          {/* Right column - can be used for an image or another element */}
-          <motion.div
-            className="hidden md:block md:col-span-4"
-            initial="hidden"
-            animate="visible"
-            variants={slideFromRight}
-          >
-            {/* You can add an image or another element here if needed */}
-          </motion.div>
+          {/* Empty right column for spacing */}
+          <div className="md:col-span-5"></div>
         </div>
       </div>
     </motion.section>
