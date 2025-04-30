@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
 // Graphics portfolio data
@@ -16,9 +16,20 @@ const graphics = [
   { id: 10, src: '/images/graphics/g10.jpeg', title: 'Illustration Set', category: 'Illustration' },
   { id: 11, src: '/images/graphics/g11.jpeg', title: 'Package Design', category: 'Branding' },
   { id: 12, src: '/images/graphics/g12.jpeg', title: 'Motion Graphics', category: 'Animation' },
-  { id: 13, src: '/images/graphics/g13.jpeg', title: 'Billboard Design', category: 'Print' },
-  { id: 14, src: '/images/graphics/g14.jpeg', title: 'Creative Concept', category: 'Illustration' },
 ];
+
+// Define the GraphicItem type
+type GraphicItem = typeof graphics[0];
+
+// Define the OrbitItem type
+interface OrbitItem extends GraphicItem {
+  angle: number;
+  initialAngle: number;
+  x: number;
+  y: number;
+  scale: number;
+  depth: number;
+}
 
 // Category filters
 const categories = [
@@ -33,169 +44,122 @@ const categories = [
   'Animation'
 ];
 
-const GraphicsPortfolio = () => {
+const OrbitalGraphicsPortfolio = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [autoplay, setAutoplay] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
-  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.1 });
+  const [orbitItems, setOrbitItems] = useState<OrbitItem[]>([]);
+  const [focused, setFocused] = useState<number | null>(null);
+  const [autoRotate, setAutoRotate] = useState(true);
+  const orbitRef = useRef(null);
 
   // Filter graphics based on selected category
   const filteredGraphics = activeCategory === 'All' 
     ? graphics 
     : graphics.filter(item => item.category === activeCategory);
 
-  // Items to show per slide based on screen size
-  const getItemsPerSlide = () => {
-    if (typeof window !== 'undefined') {
-      if (window.innerWidth >= 1280) return 4; // xl screens
-      if (window.innerWidth >= 1024) return 3; // lg screens
-      if (window.innerWidth >= 640) return 2;  // md screens
-      return 1; // sm screens
-    }
-    return 4; // Default to desktop size
-  };
-
-  const [itemsPerSlide, setItemsPerSlide] = useState(4);
-  const totalSlides = Math.ceil(filteredGraphics.length / itemsPerSlide);
-
   useEffect(() => {
-    const handleResize = () => {
-      setItemsPerSlide(getItemsPerSlide());
-    };
+    // Set up orbit positions
+    const itemCount = Math.min(filteredGraphics.length, 8); // Show max 8 items in orbit
+    const newOrbitItems = filteredGraphics.slice(0, itemCount).map((item, index) => {
+      const angle = (index / itemCount) * 2 * Math.PI;
+      return {
+        ...item,
+        angle: angle,
+        initialAngle: angle,
+        x: Math.cos(angle),
+        y: Math.sin(angle),
+        scale: 1,
+        depth: 0,
+      };
+    });
 
-    // Set initial items per slide
-    handleResize();
+    setOrbitItems(newOrbitItems as OrbitItem[]);
+    setFocused(null);
+  }, [filteredGraphics]);
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Update total slides when filtered graphics or items per slide changes
+  // Auto-rotate effect
   useEffect(() => {
-    // Reset to first slide when category changes
-    setCurrentSlide(0);
-  }, [filteredGraphics.length, itemsPerSlide]);
-
-  const nextSlide = useCallback(() => {
-    setDirection(1);
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
-  }, [totalSlides]);
-
-  const prevSlide = useCallback(() => {
-    setDirection(-1);
-    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
-  }, [totalSlides]);
-
-  const goToSlide = useCallback((index: number) => {
-    setDirection(index > currentSlide ? 1 : -1);
-    setCurrentSlide(index);
-  }, [currentSlide]);
-
-  // Autoplay functionality
-  useEffect(() => {
-    if (!autoplay || isPaused) return;
-
+    if (!autoRotate || focused !== null) return;
     const interval = setInterval(() => {
-      nextSlide();
-    }, 3000);
-
+      setOrbitItems((prev: OrbitItem[]) => {
+        return prev.map(item => {
+          const newAngle = item.angle + 0.005;
+          return {
+            ...item,
+            angle: newAngle,
+            x: Math.cos(newAngle),
+            y: Math.sin(newAngle),
+          };
+        });
+      });
+    }, 16);
+    
     return () => clearInterval(interval);
-  }, [autoplay, isPaused, nextSlide]);
+  }, [autoRotate, focused]);
+
+  const handleFocus = (id: number) => {
+    if (focused === id) {
+      setFocused(null);
+      return;
+    }
+    setFocused(id);
+    // Bring the focused item to the front
+    setOrbitItems((prev: OrbitItem[]) => {
+      return prev.map(item => {
+        if (item.id === id) {
+          return { ...item, scale: 1.5, depth: 10 };
+        }
+        return { ...item, scale: 0.8, depth: 0 };
+      });
+    });
+  };
 
   const openLightbox = (id: number) => {
     setSelectedImage(id);
     setIsLightboxOpen(true);
-    setAutoplay(false);
+    setAutoRotate(false);
     document.body.style.overflow = 'hidden';
   };
 
-  const closeLightbox = useCallback(() => {
+  const closeLightbox = () => {
     setIsLightboxOpen(false);
-    setAutoplay(true);
+    setAutoRotate(true);
     document.body.style.overflow = 'auto';
-  }, []);
+  };
 
-  const nextImage = useCallback(() => {
+  const nextImage = () => {
     if (selectedImage !== null) {
       const currentIndex = filteredGraphics.findIndex(item => item.id === selectedImage);
       const nextIndex = (currentIndex + 1) % filteredGraphics.length;
       setSelectedImage(filteredGraphics[nextIndex].id);
     }
-  }, [selectedImage, filteredGraphics]);
+  };
 
-  const prevImage = useCallback(() => {
+  const prevImage = () => {
     if (selectedImage !== null) {
       const currentIndex = filteredGraphics.findIndex(item => item.id === selectedImage);
       const prevIndex = (currentIndex - 1 + filteredGraphics.length) % filteredGraphics.length;
       setSelectedImage(filteredGraphics[prevIndex].id);
     }
-  }, [selectedImage, filteredGraphics]);
-
-  // Add key event listeners for lightbox navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isLightboxOpen) return;
-      
-      switch (e.key) {
-        case 'Escape':
-          closeLightbox();
-          break;
-        case 'ArrowRight':
-          nextImage();
-          break;
-        case 'ArrowLeft':
-          prevImage();
-          break;
-        default:
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isLightboxOpen, selectedImage, closeLightbox, nextImage, prevImage]);
-
-  // Get current slides
-  const getCurrentSlideItems = () => {
-    const startIndex = currentSlide * itemsPerSlide;
-    return filteredGraphics.slice(startIndex, startIndex + itemsPerSlide);
-  };
-
-  // Variants for slide animations
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 500 : -500,
-      opacity: 0
-    }),
-    center: {
-      x: 0,
-      opacity: 1
-    },
-    exit: (direction: number) => ({
-      x: direction < 0 ? 500 : -500,
-      opacity: 0
-    })
   };
 
   return (
-    <section className="py-20 bg-gray-50" ref={ref}>
-      <div className="container mx-auto px-4">
+    <section className="py-20 bg-gray-100 text-gray-800 overflow-hidden relative">
+      {/* Soft blue accent */}
+      <div className="absolute top-20 left-20 w-64 h-64 bg-blue-400 rounded-full opacity-10 blur-3xl"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div 
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-yellow-500 font-semibold">OUR CREATIVE WORK</span>
-          <h2 className="text-4xl font-bold text-gray-900 mt-2 mb-4">Graphics Portfolio</h2>
+          <span className="text-blue-600 font-semibold">OUR CREATIVE WORK</span>
+          <h2 className="text-4xl font-bold mt-2 mb-4">Graphics Portfolio</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            A showcase of our creative design projects delivered with precision and artistic excellence
+            Interactive showcase of our creative design projects delivered with precision and artistic excellence
           </p>
         </motion.div>
 
@@ -203,7 +167,7 @@ const GraphicsPortfolio = () => {
         <motion.div 
           className="flex flex-wrap justify-center gap-2 mb-12"
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           {categories.map((category, index) => (
@@ -211,14 +175,14 @@ const GraphicsPortfolio = () => {
               key={category}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 activeCategory === category
-                  ? 'bg-yellow-500 text-white shadow-md'
-                  : 'bg-white text-gray-600 hover:bg-yellow-100'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'bg-white text-gray-700 hover:bg-gray-200'
               }`}
               onClick={() => setActiveCategory(category)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 10 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.3 + index * 0.05 }}
             >
               {category}
@@ -226,142 +190,130 @@ const GraphicsPortfolio = () => {
           ))}
         </motion.div>
 
-        {/* Carousel Layer 1 */}
-        <div className="relative max-w-6xl mx-auto px-10" ref={carouselRef}>
+        {/* Orbital Display */}
+        <div className="relative h-[600px] w-full" ref={orbitRef}>
+          {/* Orbit lines */}
+          <motion.div 
+            className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] rounded-full border border-gray-300 opacity-30"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 0.3, scale: 1 }}
+            transition={{ duration: 1 }}
+          />
 
-          {/* Carousel Controls */}
-          <div className="absolute inset-y-0 left-0 flex items-center z-10">
-            <motion.button
-              className="bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-md text-gray-800 hover:bg-yellow-500 hover:text-white transition-colors duration-300"
-              onClick={prevSlide}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              disabled={filteredGraphics.length <= itemsPerSlide}
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </motion.button>
-          </div>
-          
-          <div className="relative overflow-hidden" 
-            onMouseEnter={() => setIsPaused(true)} 
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            <AnimatePresence initial={false} mode="wait" custom={direction}>
+          {/* Orbit points */}
+          <motion.div 
+            className="absolute left-1/2 top-0 transform -translate-x-1/2 w-3 h-3 rounded-full bg-blue-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1 }}
+          />
+
+          {/* Orbital items */}
+          {orbitItems.map((item) => {
+            // Calculate position based on angle
+            const orbitRadius = 240; // Radius of orbit in pixels
+            const leftPos = `calc(50% + ${item.x * orbitRadius}px)`;
+            const topPos = `calc(50% + ${item.y * orbitRadius}px)`;
+            
+            return (
               <motion.div
-                key={currentSlide}
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.2 }
+                key={item.id}
+                className="absolute"
+                style={{ 
+                  left: leftPos, 
+                  top: topPos,
+                  zIndex: item.depth
                 }}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                animate={{ 
+                  x: `-50%`,
+                  y: `-50%`,
+                  scale: item.scale || 1,
+                  transition: { duration: 0.3 }
+                }}
+                whileHover={{ scale: 1.1 }}
               >
-                {getCurrentSlideItems().map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    className="rounded-xl overflow-hidden bg-white shadow-md cursor-pointer group h-[280px] relative"
-                    onClick={() => openLightbox(item.id)}
-                    whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                  >
-                    <div className="h-full w-full overflow-hidden">
-                      <div className="relative h-full w-full">
-                        <Image
-                          src={item.src}
-                          alt={item.title}
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                          <h3 className="text-white font-bold text-xl mb-1">{item.title}</h3>
-                          <div className="flex items-center gap-2">
-                            <span className="inline-block px-3 py-1 bg-yellow-500/80 text-white text-xs rounded-full">
-                              {item.category}
-                            </span>
-                            <span className="text-white/80 text-sm">Click to view</span>
-                          </div>
-                        </div>
+                <motion.div 
+                  className="cursor-pointer group"
+                  onClick={() => handleFocus(item.id)}
+                  onDoubleClick={() => openLightbox(item.id)}
+                >
+                  <div className="relative w-48 h-40 rounded-lg overflow-hidden border border-gray-300 shadow-lg">
+                    <Image
+                      src={item.src}
+                      alt={item.title}
+                      fill
+                      sizes="192px"
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-white/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <div className="text-gray-800 text-sm font-medium text-center p-1">
+                        {item.title}
                       </div>
                     </div>
-                  </motion.div>
-                ))}
+                  </div>
+                </motion.div>
               </motion.div>
-            </AnimatePresence>
-          </div>
-          
-          <div className="absolute inset-y-0 right-0 flex items-center z-10">
-            <motion.button
-              className="bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-md text-gray-800 hover:bg-yellow-500 hover:text-white transition-colors duration-300"
-              onClick={nextSlide}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              disabled={filteredGraphics.length <= itemsPerSlide}
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </motion.button>
-          </div>
-          
-          {/* Play/Pause Button */}
-          <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 flex items-center gap-3">
-            {totalSlides > 1 && (
-              <motion.button
-                className="bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-md text-gray-800 hover:bg-yellow-500 hover:text-white transition-colors duration-300"
-                onClick={() => setAutoplay(!autoplay)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                {autoplay ? (
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                ) : (
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                )}
-              </motion.button>
-            )}
-            
-            {/* Pagination Dots */}
-            <div className="flex items-center gap-2 mt-6">
-              {Array.from({ length: totalSlides }).map((_, index) => (
-                <motion.button
-                  key={index}
-                  className={`h-2.5 rounded-full transition-all ${
-                    currentSlide === index ? 'w-8 bg-yellow-500' : 'w-2.5 bg-gray-300 hover:bg-gray-400'
-                  }`}
-                  onClick={() => goToSlide(index)}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                />
-              ))}
-            </div>
-          </div>
+            );
+          })}
         </div>
 
+        {/* Selected item details */}
+        <AnimatePresence>
+          {focused !== null && (
+            <motion.div 
+              className="mt-12 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h3 className="text-2xl font-bold text-gray-800">
+                {orbitItems.find(item => item.id === focused)?.title}
+              </h3>
+              <p className="text-blue-600 mt-2">
+                {orbitItems.find(item => item.id === focused)?.category}
+              </p>
+              <p className="text-gray-600 mt-4 max-w-xl mx-auto">
+                Double-click on any item to view in fullscreen.
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Controls */}
+        <div className="mt-12 flex justify-center gap-4">
+          <motion.button
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              autoRotate 
+                ? 'bg-blue-600 text-white shadow-md' 
+                : 'bg-white text-gray-700 hover:bg-gray-200'
+            }`}
+            onClick={() => setAutoRotate(!autoRotate)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {autoRotate ? 'Pause Rotation' : 'Resume Rotation'}
+          </motion.button>
+          <motion.button
+            className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 bg-white text-gray-700 hover:bg-gray-200"
+            onClick={() => setFocused(null)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Reset View
+          </motion.button>
+        </div>
 
         {/* View All Button */}
         <motion.div 
-          className="text-center mt-24"
+          className="text-center mt-20"
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
           <motion.button
-            className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-lg font-semibold hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 shadow-lg inline-flex items-center"
-            whileHover={{ scale: 1.05, boxShadow: "0 5px 15px rgba(234, 179, 8, 0.4)" }}
+            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-lg font-semibold hover:from-blue-500 hover:to-blue-300 transition-all duration-300 shadow-lg inline-flex items-center"
+            whileHover={{ scale: 1.05, boxShadow: "0 5px 15px rgba(59, 130, 246, 0.4)" }}
             whileTap={{ scale: 0.95 }}
           >
             View Complete Portfolio
@@ -380,7 +332,7 @@ const GraphicsPortfolio = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-gray-900/90 z-50 flex items-center justify-center p-4"
             onClick={closeLightbox}
           >
             <motion.button
@@ -435,18 +387,18 @@ const GraphicsPortfolio = () => {
                 >
                   <div className="relative h-[70vh] w-full">
                     <Image
-                      src={graphics.find(item => item.id === selectedImage)!.src}
-                      alt={graphics.find(item => item.id === selectedImage)!.title}
+                      src={graphics.find(item => item.id === selectedImage)?.src || ''}
+                      alt={graphics.find(item => item.id === selectedImage)?.title || ''}
                       fill
                       sizes="80vw"
                       className="object-contain"
                     />
                   </div>
                   <div className="p-6 bg-white">
-                    <h3 className="text-xl font-bold text-gray-900">
+                    <h3 className="text-xl font-bold text-gray-800">
                       {graphics.find(item => item.id === selectedImage)?.title}
                     </h3>
-                    <p className="text-yellow-500">{graphics.find(item => item.id === selectedImage)?.category}</p>
+                    <p className="text-blue-600">{graphics.find(item => item.id === selectedImage)?.category}</p>
                   </div>
                 </motion.div>
               )}
@@ -458,4 +410,4 @@ const GraphicsPortfolio = () => {
   );
 };
 
-export default GraphicsPortfolio; 
+export default OrbitalGraphicsPortfolio;
