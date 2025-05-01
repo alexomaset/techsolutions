@@ -109,8 +109,8 @@ export default function ProjectsSection() {
               key={category}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 activeCategory === category
-                  ? 'bg-yellow-500 text-white shadow-md'
-                  : 'bg-white text-gray-600 hover:bg-yellow-100'
+                  ? 'bg-lime-500 text-white shadow-md'
+                  : 'bg-white text-gray-600 hover:bg-lime-100'
               }`}
               onClick={() => setActiveCategory(category)}
               whileHover={{ scale: 1.05 }}

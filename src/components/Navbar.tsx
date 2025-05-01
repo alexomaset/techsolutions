@@ -117,7 +117,7 @@ const Navbar = () => {
                 className={getLinkClass(
                   item.href,
                   "px-2 py-1 text-gray-900 hover:text-amber-800 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-yellow-600 rounded-sm",
-                  "text-amber-900 font-semibold" 
+                  "text-lime-900 font-semibold" 
                 )}
               >
                 {item.name}
@@ -129,7 +129,7 @@ const Navbar = () => {
             <Link
               href="/contact"
               className={`px-5 py-2 text-white rounded-full font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 ${
-                scrolled ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-amber-700 hover:bg-amber-800'
+                scrolled ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-lime-700 hover:bg-amber-800'
               }`}
             >
               Get Started

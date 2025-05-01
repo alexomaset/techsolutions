@@ -88,7 +88,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ parallaxY }) => {
                 <span className="block text-4xl md:text-5xl lg:text-6xl text-yellow-200 mb-2 drop-shadow-md">Your Business</span>
                 <span className="block text-4xl md:text-5xl lg:text-6xl">
                   <span className="text-yellow-200">with</span>
-                  <span className="text-yellow-400 ml-3">Technology</span>
+                  <span className="text-lime-400 ml-3">Technology</span>
                 </span>
               </h1>
             </motion.div>
@@ -106,7 +106,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ parallaxY }) => {
             >
               <Link
                 href="/contact"
-                className="px-8 py-4 bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold rounded-full shadow-lg transition transform hover:scale-105 hover:shadow-yellow-500/20 hover:shadow-xl"
+                className="px-8 py-4 bg-yellow-700 hover:bg-yellow-600 text-gray-900 font-semibold rounded-full shadow-lg transition transform hover:scale-105 hover:shadow-yellow-500/20 hover:shadow-xl"
               >
                 Get Started
               </Link>
