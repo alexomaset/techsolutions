@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import React from 'react';
-import Image from 'next/image';
+
 
 // Define Service interface
 interface Service {
@@ -134,7 +134,7 @@ const ServicesSection = () => {
   const [direction, setDirection] = useState<number>(0); // -1 for left, 1 for right
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const ref = useRef<HTMLElement | null>(null);
-  const isInView = true; // Simplified for now
+ 
 
   // Filter services based on selected category
   const filteredServices = activeCategory === 'All' 
